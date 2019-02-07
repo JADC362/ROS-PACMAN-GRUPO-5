@@ -30,7 +30,7 @@ def callbackCookiesPos(msg):
 	n = msg.nCookies; #Obtencion numero de galletas
 	cookiesInfo[0]=n;
 	cookiesInfo[1]=[0]*n;
-	#Separacion vector posicion en un arreglo con forma x,y cada posicion
+	#Separacion vector posicion en un diccionario con forma "x":valx ,"y":valy cada posicion
 	for i in range(n):
 		posX = msg.cookiesPos[i].x+(len(mapInfo[0])-1)/2;
 		posY = ((len(mapInfo)-1))-(msg.cookiesPos[i].y+(len(mapInfo)-1)/2);
@@ -44,7 +44,7 @@ def callbackBonusPos(msg):
 	n = msg.nBonus; #Obtencion numero de bonus
 	bonusInfo[0]=n;
 	bonusInfo[1]=[0]*n;
-	#Separacion vector posicion en un arreglo con forma x,y cada posicion
+	#Separacion vector posicion en un diccionario con forma "x":valx ,"y":valy cada posicion
 	for i in range(n):
 		posX = msg.bonusPos[i].x+(len(mapInfo[0])-1)/2;
 		posY = ((len(mapInfo)-1))-(msg.bonusPos[i].y+(len(mapInfo)-1)/2);
@@ -57,7 +57,7 @@ def callbackGhostsPos(msg):
 	n = msg.nGhosts; #Obtencion numero de fantasmas
 	ghostsInfo[0]=n;
 	ghostsInfo[1]=[0]*n;
-	#Separacion vector posicion en un arreglo con forma x,y cada posicion
+	#Separacion vector posicion en un diccionario con forma "x":valx ,"y":valy cada posicion
 	for i in range(n):
 		posX = msg.ghostsPos[i].x+(len(mapInfo[0])-1)/2;
 		posY = ((len(mapInfo)-1))-(msg.ghostsPos[i].y+(len(mapInfo)-1)/2);
