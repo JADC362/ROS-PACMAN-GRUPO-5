@@ -9,11 +9,12 @@ from pacman.msg import ghostsPos
 from pacman.srv import mapService
 
 #Declaracion constantes globales
-OBSTACULO = "#";
-PACMAN = "C";
-COOKIE = "o";
-BONUS = "%";
-GHOST = "F";
+OBSTACULO = "%";
+PACMAN = "P";
+COOKIE = ".";
+BONUS = "o";
+GHOST = "G";
+BLANCO = " ";
 
 #Declaracion variables globales
 mapResponse = 0;
@@ -80,7 +81,7 @@ def actualizarMapa():
 	#Borrado e creacion de matriz mapInfo
 	anchoX =  mapResponse.maxX - mapResponse.minX + 1;
 	altoY = mapResponse.maxY - mapResponse.minY + 1
-	mapInfo = [['0' for i in range(anchoX)] for i in range(altoY)]
+	mapInfo = [[BLANCO for i in range(anchoX)] for i in range(altoY)]
 
 	#Llenado de la matriz mapInfo con los datos de los obstaculos del mapa
 	for i in range(mapResponse.nObs):
