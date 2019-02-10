@@ -42,3 +42,9 @@ EJECUCIÓN
 	3)
 	4)
 	5)
+	
+CREADORES:
+	- John Alejandro Duarte Carraco
+	- Jonathan Steven Roncancio
+	- Santiago Devia Valderrama
+	- Miguel Angel Mozo
