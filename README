@@ -1,0 +1,63 @@
+# ros-pacman
+
+CONTEXT
+This repository was originally created for the AI Challenge: an activity directed toward students that belong to one of the universities that are part of the SINFONIA alliance. SINFONIA is an effort from academy and industry to implement and apply solutions to a variety of problems using artificial intelligence. At this moment, the institutions that belong to SINFONIA are: Universidad de los Andes, Universidad Santo Tomás, Universidad del Magdalena and Bancolombia.
+
+DESCRIPTION
+This is a version of the original Pac-Man game implemented over ROS (Robot Operating System, http://www.ros.org/). It consists of a ROS package called pacman and a ROS node called pacman_world that acts as a simulator of the Pac-Man environment, i.e., the dots, bonus, ghosts, maps (obstacles) and Pac-Man himself. The simulator creates all the environment and publishes it in different ROS topics so that a controller node(s) can read them. At the same time, the controller node(s) is (are) expected to generate actions for Pac-Man and publish them in a specific ROS topic. The pacman_world node suscribes to such topic to implement the motion of Pac-man inside the world.
+
+SYSTEM REQUIREMENTS
+	- Ubuntu 16.04 64 bits
+	- ROS Kinetic
+	- Qt5 Development Libraries
+	- OpenGL
+
+INSTALLATION
+	- There are two ways to install all the dependencies for the ros-pacman software:
+	1) The user can manually install ROS and the corresponding catkin workspace following the tutorials in http://wiki.ros.org/kinetic/Installation/Ubuntu
+	2) We have provided a script that installs all the dependencies including ROS and the catkin workspace (it takes some time). The script also installs git, however it is not mandatory. To run it, execute the following steps:
+	   a) Download and extract the ros-pacman repository from https://github.com/carlosquinterop/ros-pacman
+	   b) Open a terminal
+	   c) cd to the repository folder
+	   d) source installPacmanRequirements.sh
+				
+COMPILATION
+	- cd ~/catkin_ws/src
+	- git clone https://github.com/carlosquinterop/ros-pacman.git (if git is installed. Otherwise, just download the repository folder into the specified folder)
+	- cd ..
+	- source devel/setup.bash
+	- catkin_make
+	
+EXECUTION
+The pacman_world node has two modes: Challenge Mode and Game Mode. In Challenge Mode, it is expected that a controller node is built and launch to control the actions of Pac-Man. The controller node can be launched in the same machine as the pacman_world or in a different machine in a local network. In Game Mode, a graphic user interface allows the user to select a map and start playing using a button. The actions of Pac-Man can be controlled using the wasd keys from the keyboard. This mode is only made to play.
+
+There are two ways to execute the pacman_world node. 1) By executing it directly in one machine as a traditional ROS node and 2) Using a bash script. The first option requires the user to independently run a roscore process, source the setup.bash and run the pacman_world node using the rosrun command with the required parameters. The second option, automatically run the roscore process (if it is not already running), it sources the setup.bash file and receives the arguments of the node as inputs by the user.
+
+TRADITIONAL EXECUTION 
+	- Open a new terminal
+	- Run: roscore
+	- Open a new terminal
+	- source devel/setup.bash
+	- Usage: rosrun pacman pacman_world [pacmanMode] {options}
+       		 
+       		 pacmanMode: Parameter that specifies the mode
+                   		 --c: Challenge mode
+                   	 	 --g: Game mode
+       		 options   : Optional arguments
+                   	     mapName: Name of map to play. Only needed in Challenge mode 
+                   		 --m: If used, runs the game with without sound 
+                   		 
+	- Example 1. Challenge Mode in originalClassic map with no mute argument:
+		 rosrun pacman pacman_world --c originalClassic
+	- Example 2. Game Mode with no mute argument
+		 rosrun pacman pacman_world --g
+	- Example 3. Challenge Mode in bigMaze map with mute argument
+		 rosrun pacman pacman_world --c bigMaze --m
+	- In Challenge Mode, a controller node must be executed to control Pac-Man: See https://github.com/carlosquinterop/pacman-controller for an example
+
+NETWORK (SCRIPT) EXECUTION
+	-cd ~/catkin_ws/src/ros-pacman
+	-source startPacmanServer.sh
+
+FOR DEVELOPMENT (Recommended)
+	- http://wiki.ros.org/IDEs#Reusing_your_shell.27s_environment
