@@ -19,10 +19,11 @@ BLANCO = " ";
 #Declaracion variables globales
 mapResponse = 0;
 mapInfo = []
-pacmanInfo = []
-bonusInfo = []
-cookiesInfo = []
-ghostsInfo = []
+pacmanInfo1 = 0;
+pacmanInfo2 = 0;
+bonusInfo = [0,[]]
+cookiesInfo = [0,[]]
+ghostsInfo = [0,[]]
 
 #Funcion callback llamada cuando se actualiza informacion en el topico cookiesCoord
 def callbackCookiesPos(msg):
@@ -65,14 +66,23 @@ def callbackGhostsPos(msg):
 		ghostsInfo[1][i]={"x": posX,"y":posY};
 
 #Funcion callback llamada cuando se actualiza informacion en el topico pacmanCoord0
-def callbackPacmanPos(msg):
-	global pacmanInfo
+def callbackPacmanPos1(msg):
+	global pacmanInfo1
+
+	#Separacion vector posicion en un diccionario con forma "x":valx ,"y":valy 
+	posX = msg.pacmanPos.x+(len(mapInfo[0])-1)/2;
+	posY = ((len(mapInfo)-1))-(msg.pacmanPos.y+(len(mapInfo)-1)/2);
+
+	pacmanInfo1 = {"x": posX,"y":posY};
+
+#Funcion callback llamada cuando se actualiza informacion en el topico pacmanCoord1
+def callbackPacmanPos2(msg):
+	global pacmanInfo2
 
 	posX = msg.pacmanPos.x+(len(mapInfo[0])-1)/2;
 	posY = ((len(mapInfo)-1))-(msg.pacmanPos.y+(len(mapInfo)-1)/2);
 
-	pacmanInfo[0] = msg.nPacman; #Obtencion numero de pacmans
-	pacmanInfo[1] = {"x": posX,"y":posY};
+	pacmanInfo2 = {"x": posX,"y":posY};
 
 #Funcion encargada de tomar la informacion y plotear un mapa en consola
 def actualizarMapa():
@@ -101,31 +111,24 @@ def actualizarMapa():
 	for i in range(ghostsInfo[0]):
 		mapInfo[ghostsInfo[1][i].get("y")][ghostsInfo[1][i].get("x")]=GHOST
 
-	#Llenado de la matriz mapInfo con los datos de los pacmans del mapa
-	mapInfo[(pacmanInfo[1]).get("y")][(pacmanInfo[1]).get("x")]=PACMAN
+	#Llenado de la matriz mapInfo con los datos del pacman1 del mapa
+	if pacmanInfo1 != 0:
+		mapInfo[(pacmanInfo1).get("y")][(pacmanInfo1).get("x")]=PACMAN
+
+	#Llenado de la matriz mapInfo con los datos del pacman2 del mapa
+	if pacmanInfo2 != 0:
+		mapInfo[(pacmanInfo2).get("y")][(pacmanInfo2).get("x")]=PACMAN
 
 #Funcion general encargada de iniciar suscripciones en topicos y servicios y mantener el codigo corriendo
 def mostrarMapa():
-	rospy.init_node('rosPacmanMapa',anonymous=True); #Inicializacion del nodo ante ROS
+	rospy.init_node('controlador_5_mapa',anonymous=False); #Inicializacion del nodo ante ROS
 
 	#Suscripciones a los diferentes topicos del nodo pacman_world
 	rospy.Subscriber("bonusCoord",bonusPos,callbackBonusPos);
 	rospy.Subscriber("cookiesCoord",cookiesPos,callbackCookiesPos);
 	rospy.Subscriber("ghostsCoord",ghostsPos,callbackGhostsPos);
-	rospy.Subscriber("pacmanCoord0",pacmanPos,callbackPacmanPos);   
-
-	#Inicializacion vectores Info
-	pacmanInfo.append(0);
-	pacmanInfo.append({"x":0,"y":0});
-
-	bonusInfo.append(0);
-	bonusInfo.append([]);
-
-	cookiesInfo.append(0);
-	cookiesInfo.append([]);
-
-	ghostsInfo.append(0);
-	ghostsInfo.append([]);
+	rospy.Subscriber("pacmanCoord0",pacmanPos,callbackPacmanPos1);  
+	rospy.Subscriber("pacmanCoord1",pacmanPos,callbackPacmanPos2);   
 
 	global mapResponse; #Se establece para esta funcion mapResponse como variable la global
 
