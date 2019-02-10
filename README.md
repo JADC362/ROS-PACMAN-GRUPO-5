@@ -52,6 +52,6 @@ EJECUCIÓN
 CREADORES
 
 	- John Alejandro Duarte Carraco
-	- Jonathan Steven Roncancio
+	- Jonathan Steven Roncancio Pinzon
 	- Santiago Devia Valderrama
-	- Miguel Angel Mozo
+	- Miguel Angel Mozo Reyes
