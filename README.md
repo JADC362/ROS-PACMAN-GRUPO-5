@@ -15,6 +15,12 @@ REQUERIMIENTOS DE SISTEMA
 	- Qt5 Development Libraries
 	- OpenGL
 
+VERSION
+
+	- Rosdistro: kinetic
+	- Rosversion: 1.12.14
+	- controller_5: 1.0.0
+
 INSTALACIÓN
 
 	1) Instalar primero ROS, siguiendo el tutorial alojado en la pagina http://wiki.ros.org/kinetic/Installation/Ubuntu y crear un workspace
