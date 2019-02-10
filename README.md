@@ -43,7 +43,8 @@ EJECUCIÓN
 	4)
 	5)
 	
-CREADORES:
+CREADORES
+
 	- John Alejandro Duarte Carraco
 	- Jonathan Steven Roncancio
 	- Santiago Devia Valderrama
