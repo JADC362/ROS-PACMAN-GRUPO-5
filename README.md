@@ -20,6 +20,9 @@ VERSION
 	- Rosdistro: kinetic
 	- Rosversion: 1.12.14
 	- controller_5: 1.0.0
+	- rospy: 1.12.14
+	- pynput: 1.4
+	- ros-pacman: 0.0.1
 
 INSTALACIÓN
 
