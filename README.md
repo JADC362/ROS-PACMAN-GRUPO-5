@@ -50,7 +50,9 @@ EJECUCIÓN
 	2) rosrun controller_5 p2MostrarMapa.py
 	3)
 	4)
-	5)
+	5) En caso se tienen que abrir dos consolas para la ejecución de dos nodos. En cada terminal se escribe:
+	   a) rosrun controller_5 p5PacmanFlechas.py
+	   b) rosrun controller_5 p5PacmanManoDerecha.py
 	
 CREADORES
 
