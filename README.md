@@ -46,10 +46,10 @@ EJECUCIÓN
 		- Ejemplo. Challenge Mode en el mapa originalClassic:
 		 rosrun pacman pacman_world --c originalClassic
 	Despues consiste en ejecutar el nodo correspondiente al punto deseado. Para cada punto el codigo es el siguiente:
-	1)
+	1) rosrun controller_5 p1MoverPacman.py
 	2) rosrun controller_5 p2MostrarMapa.py
-	3)
-	4)
+	3) rosrun controller_5 p3MoverPacman.py
+	4) rosrun controller_5 p4MoverPacmanPared
 	5) En caso se tienen que abrir dos consolas para la ejecución de dos nodos. En cada terminal se escribe:
 	   a) rosrun controller_5 p5PacmanFlechas.py
 	   b) rosrun controller_5 p5PacmanManoDerecha.py
