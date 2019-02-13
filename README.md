@@ -1,4 +1,4 @@
-# controller_5
+## controller_5
 
 CONTEXTO
 
@@ -35,6 +35,12 @@ COMPILACIÓN
 	- cd ~/catkin_ws (o dirijirse al workspace creado)
 	- source devel/setup.bash
 	- catkin_make
+PERMISOS
+
+	Cada código creado debe darsele la opción de ejecutarse. Para este se implementa el siguiente codigo:
+	- cd ~/catkin_ws/src/controller_5/scripts/
+	- chmod +x *.py 
+
 EJECUCIÓN
 
 	Lo primero es ejecutar el entorno de ros y despues el nodo pacman_world en el mapa deseado:
