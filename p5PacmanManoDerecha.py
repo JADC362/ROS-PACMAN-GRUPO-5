@@ -9,19 +9,29 @@ from pacman.msg import actions
 
 #Inicializacion de varibales globales
 
+
+estaCerca = False; #Indica si los pacman estan cerca con una proximidad de 1
 accion = 2 # modela la accion que debe seguir pacman
 mapa = 0 # Variale global que modela la relacion con el mapa 
-nObs = 0 # Numero de obstaculos en el mapa
-PacmanPosX=0 # Posicion en x de pacman con respecto al mapa
-PacmanPosY=0 # Posicion en y de pacman con respecto al mapa
+PacmanPosX1=0 # Posicion en x de pacman 1 con respecto al mapa
+PacmanPosY1=0 # Posicion en y de pacman 1 con respecto al mapa
+
+PacmanPosX0=10 # Posicion en x de pacman 0 con respecto al mapa
+PacmanPosY0=10 # Posicion en y de pacman 0 con respecto al mapa
 
 #Metodo llamado al crear la relacion entre el nodo y el servicio mapService
-#En este metodo se actualizan los valores de PacmanPosX y PacmanPosY
-def pacmanPosCallback(msg):
-    global PacmanPosX, PacmanPosY
-    PacmanPosX = msg.pacmanPos.x
-    PacmanPosY = msg.pacmanPos.y
-    pass 
+#En este metodo se actualizan los valores de PacmanPosX0 y PacmanPosY0
+def pacmanPosCallback0(msg):
+    global PacmanPosX0, PacmanPosY0
+    PacmanPosX0 = msg.pacmanPos.x
+    PacmanPosY0 = msg.pacmanPos.y
+
+#Metodo llamado al crear la relacion entre el nodo y el servicio mapService
+#En este metodo se actualizan los valores de PacmanPosX1 y PacmanPosY1
+def pacmanPosCallback1(msg):
+    global PacmanPosX1, PacmanPosY1
+    PacmanPosX1 = msg.pacmanPos.x
+    PacmanPosY1 = msg.pacmanPos.y
 
 
 # direccion: direccion hacia la cual se quiere mover a pacman. numero entero entre 0 y 3 
@@ -33,23 +43,23 @@ def MovimientoValido(direccion):
 # pos: hace referencia a la posicion que tomara el pacman sobre el eje en el que se quiere mover una vez se mueva 
 # posA: posicion del pacman sobre el eje en el que no se movera 
     pos,posC,posA,posAC = 0,0,0,0;
-    if direccion == 0:
-        pos = PacmanPosY+1 
-        posA = PacmanPosX 
-    elif direccion == 1:
-        pos = PacmanPosY-1 
-        posA = PacmanPosX 
-    elif direccion == 2:
-        pos = PacmanPosX+1 
-        posA = PacmanPosY
-    elif direccion == 3: 
-        pos = PacmanPosX-1 
-        posA = PacmanPosY
 
+    if direccion == 0:
+        pos = PacmanPosY1+1 
+        posA = PacmanPosX1 
+    elif direccion == 1:
+        pos = PacmanPosY1-1 
+        posA = PacmanPosX1 
+    elif direccion == 2:
+        pos = PacmanPosX1+1 
+        posA = PacmanPosY1
+    elif direccion == 3: 
+        pos = PacmanPosX1-1 
+        posA = PacmanPosY1
 
     respuesta = True
 
-    for i in range(0, nObs):
+    for i in range(0, mapa.nObs):
         if direccion - 1 <= 0:
             posC = mapa.obs[i].y
             posAC = mapa.obs[i].x
@@ -81,7 +91,7 @@ def devolverse():
         accion = accion+1-2*U(accion-1)
     else:    
         accion = accion+1-2*U(accion-3)
-        
+
 #Determina que accion debe tomar el pacman con el fin de moverse lo mas a la derecha posible
 def determinarAccion():
     global accion
@@ -90,52 +100,81 @@ def determinarAccion():
 
     if MovimientoValido(rAccion):
         accion = rAccion
-
     elif MovimientoValido(accion):
         accion = accion 
-
     elif accion == 0 and MovimientoValido(3):
         accion = 3
-
     elif accion == 1 and MovimientoValido(2):
         accion = 2
-
     elif accion == 2 and MovimientoValido(0):
         accion = 0
-
     elif accion == 3 and MovimientoValido(1):
         accion = 1
     else:
         devolverse()
 
+#Determina si ambos pacman estan cerca a uno posicion maxima de 1 x 1 
+def estaCercaElOtro():
+    global estaCerca;
+
+    cercaX = abs(PacmanPosX0 - PacmanPosX1)
+    cercaY = abs(PacmanPosY0 - PacmanPosY1)
+
+    if cercaX <= 1 and cercaY <= 1:
+        estaCerca = True
+
+#Funcion encarga de tomar las acciones que permitan al pacman actual seguir al pacman controlado por las teclas
+def seguirPacman():
+    global accion
+    cercaX = PacmanPosX0 - PacmanPosX1
+    cercaY = PacmanPosY0 - PacmanPosY1
+
+    if not (cercaY == 0 and cercaX == 0):
+        if cercaY == 0:
+            if cercaX > 0:
+                accion = 2;
+            else:
+                accion = 3;
+        elif cercaX == 0:
+            if cercaY > 0:
+                accion = 0;
+            else:
+                accion = 1;
 
 #Funcion que controla el pacman
 def pacman_controller():
 
-    global mapa, nObs,accion
+    global mapa, accion, estaCerca
 
     #Inicializacion del nodo 
-    rospy.init_node('controller_py', anonymous=True)
-    #Se suscribe el nodo al topico pacmanCoord0 para poder conocer la posicion del pacman en el mapa
-    rospy.Subscriber('pacmanCoord0',pacmanPos,pacmanPosCallback)
+    rospy.init_node('controlador_5_DerechaP5', anonymous=True)
+
+    #Se suscribe al topico pacmanCoord0 y pacmanCoord1 para conocer la posicion de los pacmans del mapa
+    rospy.Subscriber('pacmanCoord0',pacmanPos,pacmanPosCallback0)
+    rospy.Subscriber('pacmanCoord1',pacmanPos,pacmanPosCallback1)
+
     #Se crea la relacion entre el topico pacmanActions0 y el nuevo nodo
     #Haciendo que el nuevo nodo publique en dicho topico
-    pub = rospy.Publisher('pacmanActions0',actions, queue_size=10)
+    pub = rospy.Publisher('pacmanActions1',actions, queue_size=10)
         
     try:
         #Solicitud del servicio del mapa para poder iniciar el juego
         mapRequestClient = rospy.ServiceProxy('pacman_world', mapService)
         mapa = mapRequestClient("pacuman")
-        #Inicializacion del numero de obstaculos en el mapa con el valor que ofrece el mensaje de mapService
-        nObs = mapa.nObs
 
-        #Tiempo durante el cual duerme el nodo
+        #Tasa de refrezco del juego
         rate = rospy.Rate(1/0.15)
         
         while not rospy.is_shutdown():
-
-            #Determina la accion que se debe tomar
-            determinarAccion()
+            #Se determina la accion que se debe tomar
+            #Si no estan los pacmans se sigue el algoritmo de la pared
+            #Si estan cerca se sigue al pacman contrlado por el usuario
+            if not estaCerca:
+                estaCercaElOtro()
+                determinarAccion()
+            else:
+                rate = rospy.Rate(10)
+                seguirPacman()
 
             #Se publica en el topico pacmanActions0 la variable global accion            
             pub.publish(accion)

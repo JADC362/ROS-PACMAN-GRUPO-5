@@ -36,17 +36,14 @@ def KeyAction(key):
 #Metodo llamado al soltar la tecla que se estaba presionando
 #Se encarga de detener el pacman cuando no se esta presionando ninguna tecla
 def stopMove(key):
-    global accion 
-
-    accion = 4
-
     return False
 
 #Metodo encargado del control del pacman
 def pacman_controller():
 
     #Se inicializa un nodo con el nombre controller_py
-    rospy.init_node('controlador_1_mover', anonymous=True)
+    rospy.init_node('controlador_5_MoverP5', anonymous=True)
+    
     #Se crea la relacion entre el topico pacmanActions0 y el nuevo nodo
     #Haciendo que el nuevo nodo publique en dicho topico
     pub = rospy.Publisher('pacmanActions0',actions, queue_size=10)
@@ -55,11 +52,10 @@ def pacman_controller():
 
         #Solicitud del servicio del mapa para poder iniciar el juego
         mapRequestClient = rospy.ServiceProxy('pacman_world', mapService)
-        mapa = mapRequestClient("pacuman")
+        mapa = mapRequestClient("Los inserapables")
 
         #Tiempo durante el cual duerme el nodo
-        rate = rospy.Rate(20)
-        
+        rate = rospy.Rate(10)
 
         while not rospy.is_shutdown():
             
@@ -80,4 +76,4 @@ if __name__ == '__main__':
     try:
         pacman_controller()
     except rospy.ROSInterruptException:   
-        print("Error al cargar el codigo")
+        print("Error al cargar el codigo") 
