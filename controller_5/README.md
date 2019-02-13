@@ -26,9 +26,10 @@ VERSION
 
 INSTALACIÓN
 
-	1) Instalar primero ROS, siguiendo el tutorial alojado en la pagina http://wiki.ros.org/kinetic/Installation/Ubuntu y crear un workspace
+	1) Instalar primero ROS, siguiendo el tutorial compleoto alojado en la pagina http://wiki.ros.org/kinetic/Installation/Ubuntu y crear un workspace
 	2) Descargar el paquete ros-pacman del siguiente repositorio https://github.com/carlosquinterop/ros-pacman al workspace.
-	3) Descargar el paquete controller_5 del repositorio actual (https://github.com/JADC362/ROS-PACMAN-GRUPO-5) y almacenarlo en el workspace. 
+	3) Instalar la libreria pynput como: pip install pynput
+	4) Descargar el paquete controller_5 del repositorio actual (https://github.com/JADC362/ROS-PACMAN-GRUPO-5) y almacenarlo en el workspace. 
 				
 COMPILACIÓN
 
