@@ -150,4 +150,4 @@ if __name__ == '__main__':
     try:
         pacman_controller()
     except rospy.ROSInterruptException:   
-        pass
+        rospy.loginfo("Error al cargar el codigo") 
