@@ -149,7 +149,7 @@ def mostrarMapa():
 			rate.sleep();
 
 	except rospy.ServiceException as e:
-		rospy.loginfo("");
+		rospy.loginfo("Inicie correctamente el nodo de pacman_world");
 
 #Condicion main que ejecuta el codigo una vez esta cargado completamente
 if __name__ == '__main__':
