@@ -70,10 +70,10 @@ def pacman_controller():
             rate.sleep()
 
     except rospy.ServiceException as e:
-        print("Inicie correctamente el nodo de pacman_world") 
+        rospy.loginfo("Inicie correctamente el nodo de pacman_world") 
 
 if __name__ == '__main__':
     try:
         pacman_controller()
     except rospy.ROSInterruptException:   
-        print("Error al cargar el codigo") 
+        rospy.loginfo("Error al cargar el codigo") 
