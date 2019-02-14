@@ -2,6 +2,7 @@
 
 #Librerias necesarias para la ejecucion del codigo
 import rospy 
+import threading
 from pynput import keyboard
 from pacman.msg import pacmanPos
 from pacman.srv import mapService 
